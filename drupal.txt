@@ -1,0 +1,29 @@
+				
+
+							-- Install Drupal on Ubuntu 18.04 --
+
+
+1. sudo apt install -y curl tasksel
+2. sudo tasksel install lamp-server
+   sudo a2enmod rewrite
+3.sudo apt install php-fdomdocument php-gd
+
+4. sudo gedit /etc/apache2/sites-enabled/000-default.conf
+(copy those lines )
+<Directory /var/www/html/>
+           Options Indexes FollowSymLinks
+           AllowOverride All
+</Directory>
+
+5. sudo systemctl restart apache2
+
+6. curl --output /tmp/drupal.tar.gz https://ftp.drupal.org/files/projects/drupal-8.4.5.tar.gz
+
+7.sudo rm -fr /var/www/html
+  sudo tar xf /tmp/drupal.tar.gz -C /var/www/
+  sudo mv /var/www/drupal-8.4.5/ /var/www/html
+  sudo chown -R www-data.www-data /var/www/html
+
+8.sudo mysqladmin create drupal
+ sudo mysql -e "CREATE USER 'admin'@'%' IDENTIFIED BY 'pass';"
+ sudo mysql -e "GRANT ALL PRIVILEGES ON drupal.* TO 'admin'@'%' WITH GRANT OPTION;"
